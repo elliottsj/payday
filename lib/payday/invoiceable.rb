@@ -38,7 +38,7 @@ module Payday::Invoiceable
   # TODO Add a per weight unit shipping cost
   # Calculates the shipping
   def shipping
-    if respond_to?(shipping_rate)
+    if respond_to?(:shipping_rate)
       shipping_rate
     else
       0
@@ -75,11 +75,10 @@ module Payday::Invoiceable
   # Iterates through the details on this invoiceable. The block given should accept
   # two parameters, the detail name and the actual detail value.
   def each_detail(&block)
-    return if respond_to?(invoice_details).nil?
+    return unless respond_to?(:invoice_details)
     
     invoice_details.each do |detail|
       block.call(detail[0], detail[1])
     end
   end
 end
-
