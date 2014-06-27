@@ -26,7 +26,7 @@ module Payday::Invoiceable
   
   # The tax for this invoice, as a BigDecimal
   def tax
-    if defined?(tax_rate)
+    if respond_to?(tax_rate)
       calculated = subtotal * tax_rate
       return 0 if calculated < 0
       calculated
@@ -38,7 +38,7 @@ module Payday::Invoiceable
   # TODO Add a per weight unit shipping cost
   # Calculates the shipping
   def shipping
-    if defined?(shipping_rate)
+    if respond_to?(shipping_rate)
       shipping_rate
     else
       0
@@ -51,15 +51,15 @@ module Payday::Invoiceable
   end
   
   def overdue?
-    defined?(:due_at) && ((due_at.is_a?(Date) && due_at < Date.today) || (due_at.is_a?(Time) && due_at < Time.now))  && !paid_at
+    respond_to?(:due_at) && ((due_at.is_a?(Date) && due_at < Date.today) || (due_at.is_a?(Time) && due_at < Time.now))  && !paid_at
   end
   
   def refunded?
-    defined?(:refunded_at) && !!refunded_at
+    respond_to?(:refunded_at) && !!refunded_at
   end
   
   def paid?
-    defined?(:paid_at) && !!paid_at
+    respond_to?(:paid_at) && !!paid_at
   end
   
   # Renders this invoice to pdf as a string
@@ -75,7 +75,7 @@ module Payday::Invoiceable
   # Iterates through the details on this invoiceable. The block given should accept
   # two parameters, the detail name and the actual detail value.
   def each_detail(&block)
-    return if defined?(invoice_details).nil?
+    return if respond_to?(invoice_details).nil?
     
     invoice_details.each do |detail|
       block.call(detail[0], detail[1])

@@ -1,8 +1,21 @@
-tmp/
-doc/
-.yardoc/
-*.gem
+# Ignore Gemfile.lock since this is a gem
 Gemfile.lock
-.bundle
-pkg/*
-bin/
+
+# Ignore bundler config.
+/.bundle
+
+# Ignore the default SQLite database.
+/db/*.sqlite3
+/db/*.sqlite3-journal
+
+# Ignore all logfiles and tempfiles.
+/log/*.log
+/tmp
+
+# Ignore RubyMine/IntelliJ files
+.idea
+
+# rails_config
+config/settings.local.yml
+config/settings/*.local.yml
+config/environments/*.local.yml
